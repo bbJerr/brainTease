@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../../config/firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faCrown } from '@fortawesome/free-solid-svg-icons';
 import './trivia.css';
 
 const Trivia = () => {
@@ -39,10 +40,33 @@ const Trivia = () => {
     setSelectedAnswer(answer);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const isCorrect = selectedAnswer === correctAnswer;
     setUserAnswer(selectedAnswer);
-    setFeedback(selectedAnswer === correctAnswer ? 'Correct!' : 'Sorry, that\'s wrong.');
-    setIsSubmitted(true); 
+    setFeedback(isCorrect ? 'Correct!' : 'Sorry, that\'s wrong.');
+    setIsSubmitted(true);
+    
+    if (isCorrect) {
+      const user = auth.currentUser;
+      if (user) {
+        const userRef = doc(db, 'leaderboard', user.uid);
+        const userDoc = await getDoc(userRef);
+  
+        if (userDoc.exists()) {
+          const existingScore = userDoc.data().score || 0;
+          await setDoc(userRef, {
+            name: user.displayName,
+            score: existingScore + 1 
+          });
+        } else {
+          await setDoc(userRef, {
+            userId: user.uid,
+            name: user.displayName,
+            score: 1  
+          });
+        }
+      }
+    }
   };
 
   const handleLogout = () => {
@@ -50,10 +74,20 @@ const Trivia = () => {
       .catch(error => console.error('Error signing out:', error));
   };
 
+  const handleNavigateToLeaderboard = () => {
+    window.location.assign("/leaderboard");
+  };
+
   const shuffle = array => array.sort(() => Math.random() - 0.5);
 
   return (
     <div className="trivia-container">
+      <FontAwesomeIcon 
+        icon={faCrown} 
+        className="leaderboard-icon" 
+        onClick={handleNavigateToLeaderboard} 
+        title="Leaderboard"
+      />
       <FontAwesomeIcon 
         icon={faSignOutAlt} 
         className="logout-icon" 

@@ -149,6 +149,18 @@
   color: #f44336;
 }
 
+.leaderboard-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--tertiary);
+}
+
+.leaderboard-icon:hover {
+  color: var(--accent);
+}
 
 @keyframes shake {
   0% { transform: translateX(0); }

@@ -1,0 +1,148 @@
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  position: relative;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0 0 40px 25px;
+  color: var(--tertiary);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.rank {
+  flex: 0 0 50px;
+  text-align: center;
+  font-weight: bold;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.name {
+  flex: 1;
+  text-align: center;
+}
+
+.score {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.trivia-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--tertiary);
+}
+
+.trivia-icon:hover {
+  color: var(--accent);
+}
+
+li:nth-child(1) .rank {
+  background-image: url('../../images/gold-medal.png');
+  width: 50px;
+  height: 50px; 
+}
+
+li:nth-child(2) .rank {
+  background-image: url('../../images/silver-medal.png');
+  width: 40px;
+  height: 40px; 
+}
+
+li:nth-child(3) .rank {
+  background-image: url('../../images/bronze-medal.png');
+  width: 30px;
+  height: 30px; 
+}
+
+li:nth-child(n+4) .rank::before {
+  content: attr(data-rank);
+}
+
+li:nth-child(1) .name, li:nth-child(1) .rank, li:nth-child(1) .score {
+  font-size: 2rem;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+li:nth-child(2) .name, li:nth-child(2) .rank, li:nth-child(2) .score {
+  font-size: 1.75rem;
+  color: rgb(216, 216, 216);
+  font-weight: bold;
+}
+
+li:nth-child(3) .name, li:nth-child(3) .rank, li:nth-child(3) .score {
+  font-size: 1.6rem;
+  color: rgb(219, 160, 81);
+  font-weight: bold;
+}
+
+li:nth-child(n+4) .name, li:nth-child(n+4) .rank, li:nth-child(n+4) .score {
+  font-size: 1.25rem;
+  color: var(--primary);
+}
+
+@media (max-width: 600px) {
+  .leaderboard-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  li:nth-child(1) .rank {
+    width: 40px;
+    height: 40px; 
+  }
+  
+  li:nth-child(2) .rank {
+    width: 35px;
+    height: 35px; 
+  }
+  
+  li:nth-child(3) .rank {
+    width: 28px;
+    height: 28px; 
+  }
+  
+  li:nth-child(1) .name, li:nth-child(1) .rank, li:nth-child(1) .score {
+    font-size: 1.6rem;
+  }
+  
+  li:nth-child(2) .name, li:nth-child(2) .rank, li:nth-child(2) .score {
+    font-size: 1.4rem;
+  }
+  
+  li:nth-child(3) .name, li:nth-child(3) .rank, li:nth-child(3) .score {
+    font-size: 1.3rem;
+  }
+  
+  li:nth-child(n+4) .name, li:nth-child(n+4) .rank, li:nth-child(n+4) .score {
+    font-size: 1.2rem;
+  }
+}
