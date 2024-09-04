@@ -31,7 +31,7 @@ const Leaderboard = () => {
             onClick={handleNavigateToTrivia} 
             title="Back to Trivia"
         />
-      <h1>Leaderboard</h1>
+      <h1 className="title">Leaderboard</h1>
       <ul>
         {scores.map((score, index) => (
           <li key={index}>

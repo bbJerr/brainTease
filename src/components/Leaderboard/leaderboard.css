@@ -7,7 +7,7 @@
   position: relative;
 }
 
-h1 {
+.title {
   font-size: 2.5rem;
   margin: 0 0 40px 25px;
   color: var(--tertiary);
@@ -111,7 +111,7 @@ li:nth-child(n+4) .name, li:nth-child(n+4) .rank, li:nth-child(n+4) .score {
     padding: 20px;
   }
 
-  h1 {
+  .title {
     font-size: 2rem;
   }
 
