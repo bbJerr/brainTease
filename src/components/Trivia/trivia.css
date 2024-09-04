@@ -136,6 +136,20 @@
   animation: shake 0.5s ease;
 }
 
+.logout-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--tertiary);
+}
+
+.logout-icon:hover {
+  color: #f44336;
+}
+
+
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-5px); }

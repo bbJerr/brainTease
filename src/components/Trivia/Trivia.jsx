@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './trivia.css';
 
 const Trivia = () => {
@@ -22,13 +26,13 @@ const Trivia = () => {
         setSelectedAnswer(null);
         setUserAnswer(null);
         setFeedback('');
-        setIsSubmitted(false); // Reset submission state
+        setIsSubmitted(false);
       })
       .catch(error => console.error('Error fetching trivia question:', error));
   };
 
   useEffect(() => {
-    fetchQuestion(); // Fetch a question when the component mounts
+    fetchQuestion(); 
   }, []);
 
   const handleSelect = answer => {
@@ -38,13 +42,24 @@ const Trivia = () => {
   const handleSubmit = () => {
     setUserAnswer(selectedAnswer);
     setFeedback(selectedAnswer === correctAnswer ? 'Correct!' : 'Sorry, that\'s wrong.');
-    setIsSubmitted(true); // Mark as submitted
+    setIsSubmitted(true); 
+  };
+
+  const handleLogout = () => {
+    signOut(auth)
+      .catch(error => console.error('Error signing out:', error));
   };
 
   const shuffle = array => array.sort(() => Math.random() - 0.5);
 
   return (
     <div className="trivia-container">
+      <FontAwesomeIcon 
+        icon={faSignOutAlt} 
+        className="logout-icon" 
+        onClick={handleLogout} 
+        title="Logout"
+      />
       <img src="/brain-tease-logo.png" alt="brain tease logo" />
       <div className="question">{question}</div>
       <div className="answers">
@@ -57,7 +72,7 @@ const Trivia = () => {
                 ${isSubmitted && selectedAnswer === answer && selectedAnswer !== correctAnswer ? 'incorrect' : ''}
                 `}
                 onClick={() => handleSelect(answer)}
-                disabled={!!userAnswer} // Disable if the user has already submitted an answer
+                disabled={!!userAnswer}
             >
                 {answer}
             </button>
@@ -68,14 +83,14 @@ const Trivia = () => {
           <button
             className="submit-answer"
             onClick={handleSubmit}
-            disabled={!selectedAnswer} // Disable if no answer is selected
+            disabled={!selectedAnswer} 
           >
             Submit
           </button>
           <button
             className="skip-question"
             onClick={fetchQuestion}
-            disabled={!!userAnswer} // Disable if the user has already submitted an answer
+            disabled={!!userAnswer}
           >
             Skip Question
           </button>
