@@ -15,6 +15,7 @@ const Trivia = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [feedback, setFeedback] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const fetchQuestion = () => {
     axios
@@ -33,6 +34,10 @@ const Trivia = () => {
   };
 
   useEffect(() => {
+    const user = auth.currentUser;
+    if (user) {
+      setUserName(user.displayName);
+    }
     fetchQuestion(); 
   }, []);
 
@@ -82,18 +87,21 @@ const Trivia = () => {
 
   return (
     <div className="trivia-container">
-      <FontAwesomeIcon 
-        icon={faCrown} 
-        className="leaderboard-icon" 
-        onClick={handleNavigateToLeaderboard} 
-        title="Leaderboard"
-      />
-      <FontAwesomeIcon 
-        icon={faSignOutAlt} 
-        className="logout-icon" 
-        onClick={handleLogout} 
-        title="Logout"
-      />
+      <div className="top-bar">
+        <FontAwesomeIcon 
+          icon={faCrown} 
+          className="leaderboard-icon" 
+          onClick={handleNavigateToLeaderboard} 
+          title="Leaderboard"
+        />
+        <div className="user-info">{userName}</div>
+        <FontAwesomeIcon 
+          icon={faSignOutAlt} 
+          className="logout-icon" 
+          onClick={handleLogout} 
+          title="Logout"
+        />
+      </div>
       <img src="/brain-tease-logo.png" alt="brain tease logo" />
       <div className="question">{question}</div>
       <div className="answers">

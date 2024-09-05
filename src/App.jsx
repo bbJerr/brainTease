@@ -26,7 +26,11 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // You can replace this with a spinner or any loading component.
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+      </div>
+    );
   }
 
   return (
